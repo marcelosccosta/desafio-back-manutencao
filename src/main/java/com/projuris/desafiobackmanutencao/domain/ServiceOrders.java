@@ -1,9 +1,14 @@
 package com.projuris.desafiobackmanutencao.domain;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "tb_ordem_servico")
@@ -22,23 +29,44 @@ public class ServiceOrders implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Column(name = "dh_inicio")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	private Date startDateTime;
+	
+	@Column(name = "dh_fim")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	private Date endDateTime;
+	
+	@Column(name = "ds_status_ordem")
+	private String status;
+	
+	@ElementCollection
+	@CollectionTable(name = "tb_comentarios_ordem")
+	private Set<String> coments = new HashSet<>();
 
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Client client;
 
+	@JoinColumn
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "serviceOrder")
 	private Equipament equipament;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_tecnico")
+	private Specialist specialist;
 
 	public ServiceOrders() {
 
-	}
+	} 	
 
-	public ServiceOrders(Integer id, Client client, Equipament equipament) {
+	public ServiceOrders(Integer id, Date startDateTime, Date endDateTime, String status) {
 		super();
 		this.id = id;
-		this.client = client;
-		this.equipament = equipament;
+		this.startDateTime = startDateTime;
+		this.endDateTime = endDateTime;
+		this.status = status;
 	}
 
 	public Integer getId() {

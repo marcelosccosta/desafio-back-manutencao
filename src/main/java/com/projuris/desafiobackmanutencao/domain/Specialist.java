@@ -2,13 +2,9 @@ package com.projuris.desafiobackmanutencao.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,44 +15,30 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "tb_cliente")
-public class Client  implements Serializable{
+@Table(name = "tb_tecnico")
+public class Specialist implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "id_cliente")
+	@Column(name = "id_tecnico")
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Integer id;
 	
-	@Column(name = "nm_cliente")	
+	@Column(name = "nm_tecnico")
 	private String name;
-	
-	@Column(name = "ds_email")	
-	private String email;
 	
 	@JsonIgnore
 	@OneToMany
 	private List<ServiceOrders> serviceOrders = new ArrayList<>();
 	
-	@ElementCollection
-	@CollectionTable(name = "tb_telefone_cli")
-	private Set<String> phones = new HashSet<>();
-	
-	@OneToMany
-	@Column(name = "id_endereco")
-	private List<Address> addresses = new ArrayList<>();
-	
-	
-	
-	public Client() {
+	public Specialist() {
 		
 	}
 
-	public Client(Integer id, String name, String email) {
+	public Specialist(Integer id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.email = email;
 	}
 
 	public Integer getId() {
@@ -75,30 +57,6 @@ public class Client  implements Serializable{
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Set<String> getPhones() {
-		return phones;
-	}
-
-	public void setPhones(Set<String> phones) {
-		this.phones = phones;
-	}
-	
-	public List<ServiceOrders> getServiceOrders() {
-		return serviceOrders;
-	}
-
-	public void setServiceOrders(List<ServiceOrders> serviceOrders) {
-		this.serviceOrders = serviceOrders;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -115,7 +73,7 @@ public class Client  implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Client other = (Client) obj;
+		Specialist other = (Specialist) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -125,5 +83,5 @@ public class Client  implements Serializable{
 	}
 	
 	
-	
+
 }
