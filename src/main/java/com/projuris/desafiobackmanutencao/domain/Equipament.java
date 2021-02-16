@@ -2,12 +2,14 @@ package com.projuris.desafiobackmanutencao.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -30,24 +32,21 @@ public class Equipament implements Serializable {
 	
 	@Column(name = "ds_marca")
 	private String brand;
-
+	
 	@JsonIgnore
-	@OneToOne
-	@JoinColumn(name = "id_ordem_servico")
-	@MapsId
-	private ServiceOrders serviceOrder;
+	@OneToOne(mappedBy = "equipament")
+	private ServiceOrder serviceOrder;
 
 	public Equipament() {
 
 	}
 
-	public Equipament(Integer id, String type, String brand, ServiceOrders serviceOrder) {
+	public Equipament(Integer id, String type, String brand) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.brand = brand;
-		this.serviceOrder = serviceOrder;
-	}
+		}
 
 	public Integer getId() {
 		return id;
@@ -73,11 +72,11 @@ public class Equipament implements Serializable {
 		this.brand = brand;
 	}
 
-	public ServiceOrders getServiceOrder() {
+	public ServiceOrder getServiceOrder() {
 		return serviceOrder;
 	}
 
-	public void setServiceOrder(ServiceOrders serviceOrder) {
+	public void setServiceOrder(ServiceOrder serviceOrder) {
 		this.serviceOrder = serviceOrder;
 	}
 

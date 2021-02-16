@@ -2,6 +2,7 @@ package com.projuris.desafiobackmanutencao.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_endereco")
@@ -37,9 +40,10 @@ public class Address implements Serializable{
 	 private String zipCode;
 	 
 	 @ManyToOne
-	 @JoinColumn(name = "id_cidade")
+	 @JoinColumn(name = "cidade_id")
 	 private City city;
 	 
+	 @JsonIgnore 
 	 @ManyToOne
 	 @JoinColumn(name = "id_cliente")
 	 private Client client;
@@ -49,7 +53,7 @@ public class Address implements Serializable{
 	 }	 
 
 	public Address(Integer id, String publicPlace, String number, String additionalInfo, String district,
-			String zipCode, City city, Client client) {
+			String zipCode, Client client, City city) {
 		super();
 		this.id = id;
 		this.publicPlace = publicPlace;
@@ -57,8 +61,8 @@ public class Address implements Serializable{
 		this.additionalInfo = additionalInfo;
 		this.district = district;
 		this.zipCode = zipCode;
-		this.city = city;
 		this.client = client;
+		this.setCity(city);
 	}
 
 

@@ -28,19 +28,17 @@ public class State implements Serializable {
 	private String name;
 	
 	@JsonIgnore
-	@OneToMany
-	@Column(name = "id_cidade")
+	@OneToMany(mappedBy = "state")
 	private List<City> cities = new ArrayList<>();
 	
 	public State() {
 		
 	}
 
-	public State(Integer id, String name, List<City> cities) {
+	public State(Integer id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.cities = cities;
 	}
 
 	public Integer getId() {

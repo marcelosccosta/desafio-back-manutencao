@@ -1,8 +1,10 @@
 package com.projuris.desafiobackmanutencao.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,14 +17,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projuris.desafiobackmanutencao.domain.enums.StatusOerderType;
 
 @Entity
 @Table(name = "tb_ordem_servico")
-public class ServiceOrders implements Serializable {
+public class ServiceOrder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "id_ordem_servico")
@@ -39,7 +45,7 @@ public class ServiceOrders implements Serializable {
 	private Date endDateTime;
 	
 	@Column(name = "ds_status_ordem")
-	private String status;
+	private Integer status;
 	
 	@ElementCollection
 	@CollectionTable(name = "tb_comentarios_ordem")
@@ -49,24 +55,29 @@ public class ServiceOrders implements Serializable {
 	@JoinColumn(name = "id_cliente")
 	private Client client;
 
-	@JoinColumn
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "serviceOrder")
+	@JsonIgnore
+	@OneToOne		
 	private Equipament equipament;
 	
+	@JsonIgnore	
 	@ManyToOne
 	@JoinColumn(name = "id_tecnico")
 	private Specialist specialist;
 
-	public ServiceOrders() {
+	public ServiceOrder() {
 
-	} 	
+	} 		
 
-	public ServiceOrders(Integer id, Date startDateTime, Date endDateTime, String status) {
+	public ServiceOrder(Integer id, Date startDateTime, Date endDateTime, StatusOerderType status, Client client,
+			Specialist specialist, Equipament equipament) {
 		super();
 		this.id = id;
 		this.startDateTime = startDateTime;
 		this.endDateTime = endDateTime;
-		this.status = status;
+		this.status = (status == null) ? null : status.getCod();
+		this.client = client;
+		this.specialist = specialist;
+		this.equipament = equipament;
 	}
 
 	public Integer getId() {
@@ -75,6 +86,55 @@ public class ServiceOrders implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}	
+
+	public Date getStartDateTime() {
+		return startDateTime;
+	}
+
+	public void setStartDateTime(Date startDateTime) {
+		this.startDateTime = startDateTime;
+	}
+
+	public Date getEndDateTime() {
+		return endDateTime;
+	}
+
+	public void setEndDateTime(Date endDateTime) {
+		this.endDateTime = endDateTime;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Set<String> getComents() {
+		return coments;
+	}
+
+	public void setComents(Set<String> coments) {
+		this.coments = coments;
+	}
+
+
+	public Equipament getEquipament() {
+		return equipament;
+	}
+
+	public void setEquipament(Equipament equipament) {
+		this.equipament = equipament;
+	}
+
+	public Specialist getSpecialist() {
+		return specialist;
+	}
+
+	public void setSpecialist(Specialist specialist) {
+		this.specialist = specialist;
 	}
 
 	public Client getClient() {
@@ -101,7 +161,7 @@ public class ServiceOrders implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ServiceOrders other = (ServiceOrders) obj;
+		ServiceOrder other = (ServiceOrder) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

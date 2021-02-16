@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,8 +29,8 @@ public class Specialist implements Serializable{
 	private String name;
 	
 	@JsonIgnore
-	@OneToMany
-	private List<ServiceOrders> serviceOrders = new ArrayList<>();
+	@OneToMany(mappedBy = "specialist")
+	private List<ServiceOrder> serviceOrders = new ArrayList<>();
 	
 	public Specialist() {
 		

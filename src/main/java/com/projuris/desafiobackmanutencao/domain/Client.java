@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -35,15 +36,14 @@ public class Client  implements Serializable{
 	private String email;
 	
 	@JsonIgnore
-	@OneToMany
-	private List<ServiceOrders> serviceOrders = new ArrayList<>();
+	@OneToMany(mappedBy = "client")
+	private List<ServiceOrder> serviceOrders = new ArrayList<>();
 	
 	@ElementCollection
 	@CollectionTable(name = "tb_telefone_cli")
 	private Set<String> phones = new HashSet<>();
 	
-	@OneToMany
-	@Column(name = "id_endereco")
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Address> addresses = new ArrayList<>();
 	
 	
@@ -91,12 +91,20 @@ public class Client  implements Serializable{
 		this.phones = phones;
 	}
 	
-	public List<ServiceOrders> getServiceOrders() {
+	public List<ServiceOrder> getServiceOrders() {
 		return serviceOrders;
 	}
 
-	public void setServiceOrders(List<ServiceOrders> serviceOrders) {
+	public void setServiceOrders(List<ServiceOrder> serviceOrders) {
 		this.serviceOrders = serviceOrders;
+	}	
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
 	}
 
 	@Override
