@@ -31,9 +31,8 @@ public class ClientResource {
 		List<Client> list = clientService.findAll();
 		List<ClientDTO> listDTO = list.stream().map( obj -> new ClientDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
-		
-		
 	}
+	
 	@RequestMapping(method = RequestMethod.POST)	
 	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDTO)	{
 		Client obj = clientService.fromDTO(objDTO);

@@ -1,17 +1,20 @@
 package com.projuris.desafiobackmanutencao.domain.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ServiceOrderNewDTO {
 
-	
-	private Date startDateTime;
+	@JsonFormat(pattern = "dd/MM/yyy HH:mm")
 	private Date endDateTime;
-	private Integer status;
-	private String coment1; 
+	private String coment1;
 	private String coment2;
 	private String coment3; 
 	private String coment4; 
+	
+	private Integer status;
 
 	private Integer client_id;
 	private Integer equipament_id;
@@ -20,33 +23,21 @@ public class ServiceOrderNewDTO {
 	public ServiceOrderNewDTO() {
 
 	}
-
-	public Date getStartDateTime() {
-		return startDateTime;
-	}
-
-	public void setStartDateTime(Date startDateTime) {
-		this.startDateTime = startDateTime;
-	}
-
+	
+	
+	
 	public Date getEndDateTime() {
 		return endDateTime;
 	}
+
+
 
 	public void setEndDateTime(Date endDateTime) {
 		this.endDateTime = endDateTime;
 	}
 
-	public Integer getStatus() {
-		return status;
-	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
 
-	
-	
 	public String getComent1() {
 		return coment1;
 	}
@@ -102,5 +93,15 @@ public class ServiceOrderNewDTO {
 	public void setSpecialist_id(Integer specialist_id) {
 		this.specialist_id = specialist_id;
 	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	
+	
 
 }

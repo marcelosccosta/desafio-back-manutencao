@@ -1,7 +1,8 @@
 package com.projuris.desafiobackmanutencao;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,19 +71,36 @@ public class DesafioBackManutencaoApplication implements CommandLineRunner{
 		addressRepository.saveAll(Arrays.asList(add1));
 		
 		Specialist spe1 = new Specialist(null, "Jobson Oliveira");
-		specialistRepository.saveAll(Arrays.asList(spe1));
+		Specialist spe2 = new Specialist(null, "Alyson Guedes");
+		Specialist spe3 = new Specialist(null, "João Queiroz");
+		specialistRepository.saveAll(Arrays.asList(spe1, spe2, spe3));
 		
 		
 		Equipament eq1 = new Equipament(null, "informatica", "Dell");
+		Equipament eq2 = new Equipament(null, "escritório", "Epson");
+		Equipament eq3 = new Equipament(null, "refrigeração", "LG");
+		Equipament eq4 = new Equipament(null, "informatica", "Lenovo");
+		Equipament eq5 = new Equipament(null, "informatica", "Microsoft");
+		Equipament eq6 = new Equipament(null, "informatica", "HP");
 		
 	
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy HH:mm");
-		ServiceOrder os1 = new ServiceOrder(null, sdf.parse("10/02/2021 10:32"), sdf.parse("12/02/2021 10:32"), StatusOerderType.IN_PROGRESS, cli1, spe1, eq1);
+				
+		ServiceOrder os1 = new ServiceOrder(null, sdf.parse("30/09/2017 10:32"), null, StatusOerderType.IN_PROGRESS, cli1, spe1, eq1);
+		ServiceOrder os3 = new ServiceOrder(null, sdf.parse("30/09/2017 10:32"), sdf.parse("30/010/2017 10:32"), StatusOerderType.RESOLVED, cli1, spe1, eq2);
+		ServiceOrder os4 = new ServiceOrder(null, sdf.parse("30/09/2017 10:32"), sdf.parse("30/10/2017 10:32"), StatusOerderType.CLOSED, cli1, spe1, eq3);
+		ServiceOrder os5 = new ServiceOrder(null, sdf.parse("30/09/2017 10:32"), null, StatusOerderType.PENDENT, cli1, spe1, eq4);
+		ServiceOrder os6 = new ServiceOrder(null, sdf.parse("30/09/2017 10:32"), null, StatusOerderType.PENDENT, cli1, spe2, eq5);
+		ServiceOrder os7 = new ServiceOrder(null, sdf.parse("30/09/2017 10:32"), null, StatusOerderType.PENDENT, cli1, spe3, eq6);
 		
 		os1.getComents().addAll(Arrays.asList("Analisando ordem de serviço"));
-		
-		equipamentRepository.saveAll(Arrays.asList(eq1));
-		serviceOrderRepository.saveAll(Arrays.asList(os1));	
+		os3.getComents().addAll(Arrays.asList("Analisando OS","OS resolvida"));
+		os4.getComents().addAll(Arrays.asList("Analisando os", "OS fechada por desistencia do cliente"));
+		os5.getComents().addAll(Arrays.asList("Analisando os", "Servico pendente por falta de peças"));
+		os6.getComents().addAll(Arrays.asList("Analisando os", "Servico pendente por falta de peças"));
+		os7.getComents().addAll(Arrays.asList("Analisando os", "Servico pendente por falta de peças"));
+		equipamentRepository.saveAll(Arrays.asList(eq1,eq2,eq3,eq4,eq5,eq6));
+		serviceOrderRepository.saveAll(Arrays.asList(os1,os3,os4,os5,os6,os7));	
 		
 		
 			
